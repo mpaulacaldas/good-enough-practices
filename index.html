@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title>Good-enough practices for data analysis</title>
+    <meta charset="utf-8" />
+    <meta name="date" content="2019-06-25" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Good-enough practices for data analysis
+## <strong>ANONYMISED VERSION</strong>
+### <br/>2019-06-25
+
+---
+
+
+
+
+
+
+&lt;style type="text/css"&gt;
+.my-larger-font {
+  font-size: 25px;
+}
+
+.small { font-size: 97% }
+.large { font-size: 110% }
+&lt;/style&gt;
+
+
+
+
+
+---
+### What is the goal of this presentation?
+
+--
+
+- Give you some guidelines that will your analysis __easier to understand__ and __easier to reproduce__ by others:
+
+--
+
+    - Colleagues
+    - Opposing parties
+    - Yourself in the future
+
+--
+
+- This guidelines also aim at providing __consistency__, which reduces the __cognitive overload__ in each stage of the analysis.
+
+--
+
+    - Where is the raw data? 
+    - Where did I put the code to produce Figure 7?
+    - Was this analysis based on the latest data?
+
+--
+
+- Implementing these rules comes at a __cost__, therefore we hope to implement __"good-enough"__ practices, that allow us to ensure the quality of our work without unessesary hassle costs.
+
+
+---
+
+class: inverse, center, middle
+
+# Good-enough practices
+That you should __always__ try to follow
+
+(_regardless_ of your programming language)
+
+---
+
+class: my-larger-font
+
+## Rules of thumb...
+
+--
+
+1. 👯‍♂ Ensure reproducibility
+
+--
+
+2. 🤸‍♀ Respect the workflow
+
+--
+
+3. 💾 Respect our naming conventions
+
+--
+
+4. 📝 Document your code and analysis
+
+--
+
+5. 🕺 Adopt a coding style
+
+---
+
+### 👯‍♂ Reproducibility
+
+--
+
+❌ Change the names of the files shared with us by clients or lawyers.
+
+--
+
+❌ Modify files *without* a script.
+
+--
+
+❌ Change the folder structure inside a contract's main directory without checking with others working in the same case.
+
+--
+
+❌ Forget to update your scripts if you have changed the name of files, or of the paths leading to those files.
+
+&lt;!-- TODO: Add screenshots for each one of these. --&gt;
+&lt;!-- TODO: Add more gotchas. Link to tweet. --&gt;
+
+---
+
+### 👯‍♂ Reproducibility
+
+--
+
+✔️ Make sure the scripts, inputs and outputs of your analysis are on the server.
+
+--
+
+✔️ State at the beginning of your scripts the file paths to your inputs and outputs.
+
+--
+
+✔️ Use R and Stata's different tools ensure your outputs are coherent with your code:
+
+- R's [RMarkdown](https://rmarkdown.rstudio.com/).
+- Stata's [`esttab/estout`](http://repec.sowi.unibe.ch/stata/estout/).
+
+---
+
+### 🤸‍♀ Workflow
+
+--
+#### .large[😕 What is it?]
+--
+
+It refers to the ***way*** in which you work on data analysis projects, either by yourself or with others.
+
+For example:
+
+--
+
+- The *way* you organise your folders.
+
+--
+
+- The *way* you name your scripts.
+
+--
+
+- The *way* you share your changes or updates with others.
+
+--
+
+- The *way* you handle repetitive tasks.
+
+---
+
+### 🤸‍♀ Workflow
+
+--
+
+#### .large[🤨 Why should you care?]
+
+--
+
+- It helps you ensure **reproducibility**.
+
+--
+
+- It makes it easier to **spot and fix** mistakes.
+
+--
+
+- It makes you more **efficient**.
+
+--
+
+#### .large[😅 ...but is it going to be hard to learn?]
+
+--
+
+- You probably already have your *own* workflow, which you have developed from your own experiences.
+
+--
+
+- Here we are suggesting a **common** workflow that we have developed from our joint experience working on cases.
+
+--
+
+- We have **written it down**, so you can take advantage its benefits know instead of having to learn these lessons the hard way.
+
+---
+
+### 🤸‍♀ Workflow
+
+--
+
+#### .large[💾 Organisation]
+
+--
+
+📄 Scripts should be left in the top-level project directory. All other inputs and outputs should be sorted into 5 sub-directories:
+
+--
+
+- 📁 **data-raw** -- Raw data sent by lawyers or clients.
+
+--
+
+- 📁 **data** -- Data files produced from the scripts in the top-level directory. Preferred formats are `.RDS` and `.dta`
+
+--
+
+- 📁 **figures** -- Figures produced from the scripts. Preferred format is `.png`.
+
+--
+
+- 📁 **tables** -- Summary tables or excerpts of the data produced for intermediary exchanges with third parties. Generally in `.xlsx` format.
+
+--
+
+- 📁 **memos** -- Data reports in `.Rmd`, `.docx`, `.pdf` or `.html` format. These are often the dynamic outputs of RMarkdown documents.
+
+--
+
+- 📁 **shiny** -- Code for one or more Shiny apps.
+
+
+---
+
+### 🤸‍♀ Workflow
+
+&lt;img src="figures/workflow.PNG" width="700px" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 🤸‍♀ Workflow
+
+We are beginning to use **Git**, a version control system, and **GitLab**, a Git-repository manager, for our data analysis projects. Before your first project with Git, make sure you read:
+
+1. [Our documentation on GitLab](i/am/a/fake/path)
+2. [The slides of our internal trainings](i/am/a/fake/path)
+3. [happygitwithr.com](https://happygitwithr.com/) ⭐ * Highly recommended, even for non-R users*
+
+&lt;img src="https://happygitwithr.com/img/watch-me-diff-watch-me-rebase-smaller.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 💾 Good names
+
+
+
+[Three principles for file names](https://speakerdeck.com/jennybc/how-to-name-files) of [@JennyBryan](https://twitter.com/JennyBryan) state that file names should:
+
+1. Be machine readable
+2. Be human readable
+3. Play well will default ordering
+
+&lt;br/&gt;
+&lt;br/&gt;
+
+.pull-left[
+
+.center[❌ __Bad__]
+
+```
+code.do
+Importation données avec accents.R
+figure avec spaces.png
+fig 2.png
+Nouve@u-jeu-données!!!.txt
+```
+
+]
+
+.pull-right[
+
+.center[✔️ __Good__]
+
+```
+analyse-prix.do
+import-donnees-enseignes.R
+fig01_histogram-prix-cadenciers.png
+fig02_scatter-comparaison-prix.png
+20170304_update-tarifs-de-gros.txt
+```
+
+]
+
+---
+
+### 💾 Good names
+#### .large[☝️ 1. Machine readable]
+
+- Work well with [**regular expressions**](https://en.wikipedia.org/wiki/Regular_expression).
+
+- Should not contain accents, special characters or spaces.
+
+- Should preferably be in the same case.
+
+&lt;br&gt;
+
+.center[
+```
+CLIENT_FR_FVO_2015-09-29_17-41-42.txt
+CLIENT_FR_FVO_2015-09-29_17-41-54.txt
+CLIENT_FR_FVO_2015-09-30_14-05-57.txt
+CLIENT_FR_FVO_2015-11-05_10-28-55.txt
+CLIENT_FR_FVO_2015-11-06_10-28-55.txt
+CLIENT_FR_FVO_2015-11-09_16-10-04.txt
+```
+]
+---
+
+### 💾 Good names
+#### .large[🤘 2. Human readable]
+
+- They should be __informative__.
+
+&lt;br&gt;
+
+.center[
+```
+01_geocodage-pdv-cible.R
+02_preparation-couples.R
+03_requests-pour-arcgis.R 
+04_impute-missing-dist.pdf
+04_impute-missing-dist.Rmd
+05_clean-distancier-traj.R
+99_data-for-app.R
+```
+]
+---
+
+### 💾 Good names
+#### .large[ 🤟 3. Play well with default ordering]
+
+- Scripts should be numbered if they need to be run in a given order.
+
+- Think about left-padding the numbers with `0`.
+
+- Dates should be in the format `YYYY-MM-DD` (international standard) or in the format `YYMMDD`, which is the style we have adopted in our reports.
+
+&lt;br&gt;
+
+.center[
+```
+01_build-data17ca16.R
+02_import-wrh17_0.R
+03_build-data17_0.R
+checks01_x-et-y.html
+checks01_x-et-y.Rmd
+checks02_x-y-w.html
+checks02_x-y-w.Rmd
+```
+]
+---
+
+### 📝 Documentation
+
+#### .large[✨ The **README**]
+
+- A [`README`](https://en.wikipedia.org/wiki/README) file contains information about other files in a directory or archive of computer software.
+
+- The main goal of the README files is to make it easier for *anyone* in the team to understand the logistics around the analyses that were carried out.
+
+#### .large[🤷‍♀ How to write a **good** README?]
+
+- Assume that you, the author, is not around to explain it!
+
+- What are the main messages you would like to leave to your colleagues?
+
+---
+
+### 📝 Documentation
+
+#### .large[✨ The **README**]
+
+&lt;img src="figures/readme-contexte.PNG" width="65%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 📝 Documentation
+
+#### .large[✨ The **README**]
+
+&lt;img src="figures/readme-shiny.PNG" width="65%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 📝 Documentation
+
+
+#### .large[✨ The **README**]
+
+&lt;img src="figures/readme-ancien.PNG" width="65%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 📝 Documentation
+
+#### .large[✨ Code comments]
+
+Consider starting scripts with a brief description of your code.
+
+&lt;img src="figures/stata-description.PNG" width="550px" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 📝 Documentation
+
+#### .large[✨ Code comments]
+
+Focus on the **why** instead of the **what**.
+
+.pull-left[
+
+.center[❌ __Bad__]
+
+```r
+# Filter observations
+pdv_complete &lt;- pdv %&gt;% 
+  filter(enseigne != "XYZ")
+```
+
+]
+
+.pull-right[
+
+.center[✔️ __Good__]
+
+```r
+# XYZ is out of business
+pdv_complete &lt;- pdv %&gt;% 
+  filter(enseigne != "XYZ")
+```
+
+]
+
+&lt;br/&gt;
+
+Comment often.
+
+
+---
+
+### 👯‍♂ Style
+
+.large[
+&gt; Good coding style is like correct punctuation: you can manage without it, butitsuremakesthingseasiertoread &lt;br/&gt; &lt;cite align="right"&gt;--- [Hadley Wickham](https://twitter.com/hadleywickham) &lt;/cite&gt;
+]
+
+&lt;br&gt;
+
+&lt;img src="figures/style.gif" width="50%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 👯‍♂ Style
+
+#### .large[💩 Why are these bad?]
+
+```r
+total.ca.pdv&lt;-sum(total.ca.pdv)
+
+mean(x,na.rm=T)
+
+iris %&gt;% group_by(Species) %&gt;% summarize_all(mean) %&gt;% ungroup
+```
+
+```stata
+gen Total_CA_PdV = CA_rayon_1 + CA_rayon_2
+```
+
+```bash
+git commit file.txt -m "modifs"
+```
+
+---
+
+### 👯‍♂ Style
+
+#### .large[✨ The tidyverse style guide]
+
+Why this style guide and not others?
+
+- It is becoming a standard given the popularity of R's tidyverse packages.
+- Can be implemented with the [`styler`](https://github.com/r-lib/styler) package.
+- Same principles can be applied to other coding languages.
+
+.center[`http://style.tidyverse.org/index.html`]
+
+#### .large[✨ Stata resources]
+
+- [Harvard's CEPR Coding Style Guide](https://sdp.cepr.harvard.edu/files/cepr-sdp/files/sdp-toolkit-coding-style-guide.pdf)
+- [The do's and don'ts of a do file](https://www.parisschoolofeconomics.eu/docs/yin-remi/do-file.pdf)
+
+---
+class: inverse, center, middle
+
+# Good-enough practices
+For Stata
+
+---
+
+### Use globals and relative paths
+
+- Use **globals** to store the paths to different directories.
+
+- You could also try using Stata's [Project Manager](https://www.stata.com/manuals/pprojectmanager.pdf), which allows you to use **relative paths** in a way similar to RStudio.
+
+- Your paths should always appear at the top of your script.
+
+.small[
+
+```r
+/* Paths */
+
+global proj   "O:/27 - EA/NAME OF CASE/Data/"
+global raw    "$proj" + "data-raw"
+global data   "$proj" + "data"
+global tables "$proj" + "tables"
+
+cd "$raw"
+
+/* Code used to import and transform the data */
+
+cd "$results"
+
+/* Code with results */
+```
+]
+
+---
+
+### Where should you start?
+
+- Learn how to explore data.
+  - Read up on `codebook`, `describe`, `inspect` and `list`.
+
+- Learn about loops (`foreach`, `foreval`).
+
+- Global and local macros.
+
+- Learn to deal with __dates__ and __strings__.
+
+---
+
+### Resources
+
+- 🔥[Stata-LaTeX workflows, by Luke Stein](https://github.com/lukestein/stata-latex-workflows)
+
+- [Stata video tutorials](https://www.stata.com/links/video-tutorials/)
+
+- 🔥 [Stata cheatsheets](http://geocenter.github.io/StataTraining/portfolio/01_resource/)
+
+- IDRE UCLA
+    - [Data Analysis Examples](https://stats.idre.ucla.edu/other/dae/)
+    - [Textbook Examples](https://stats.idre.ucla.edu/other/examples/)
+    - [Choosing the right statistical tests](https://stats.idre.ucla.edu/other/mult-pkg/whatstat/)
+
+---
+class: inverse, center, middle
+
+# Good-enough practices
+For R &amp; RStudio
+
+---
+
+## Our R toolkit
+
+--
+__R__ is an open source programming language and software environment for statistical computing and graphics. You can download the latest version from the [CRAN](https://cran.r-project.org/) website.
+
+--
+
+__RStudio__ is an integrated development environment (IDE) for R programming. You can download the open source Desktop version from the [RStudio](https://www.rstudio.com/products/rstudio/download/) website.
+
+--
+
+__Packages__ are collections of R functions, data, and compiled code in a well-defined format. The directory where packages are stored is called the library.
+
+--
+
+The __tidyverse__ is an opinionated collection of R packages designed for data science. All packages share an underlying philosophy and common APIs.
+
+---
+
+## Setting up RStudio
+
+`Tools -&gt; Global Options -&gt; General`
+
+&lt;img src="figures/global-opts-rdata.PNG" width="400px" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Setting up RStudio
+
+`Tools -&gt; Global Options -&gt; Code -&gt; Display`
+
+&lt;img src="figures/global-opts-margins.PNG" width="400px" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Setting up RStudio
+
+`Tools -&gt; Global Options -&gt; Code -&gt; Saving`
+
+&lt;img src="figures/global-opts-encoding.PNG" width="400px" style="display: block; margin: auto;" /&gt;
+
+---
+
+### What is a working directory?
+
+The __working directory__ is where R looks for files that you ask it to load, and where it will put any files that you ask it to save.
+
+You can print your working directory by running `getwd()`:
+
+
+```r
+getwd()
+```
+
+You can change the working directory within R by running `setwd()`. 
+
+
+```r
+setwd("C:/Users/mcaldasrivera/Desktop/")
+```
+
+---
+
+### Advice from the masters
+
+Changing the working directory is **bad form**. Work with projects instead.
+
+&lt;blockquote class="twitter-tweet tw-align-center" data-lang="en"&gt;&lt;p lang="en" dir="ltr"&gt;The only two things that make &lt;a href="https://twitter.com/JennyBryan?ref_src=twsrc%5Etfw"&gt;@JennyBryan&lt;/a&gt; 😤😠🤯. Instead use projects + here::here() &lt;a href="https://twitter.com/hashtag/rstats?src=hash&amp;amp;ref_src=twsrc%5Etfw"&gt;#rstats&lt;/a&gt; &lt;a href="https://t.co/GwxnHePL4n"&gt;pic.twitter.com/GwxnHePL4n&lt;/a&gt;&lt;/p&gt;&amp;mdash; Hadley Wickham (@hadleywickham) &lt;a href="https://twitter.com/hadleywickham/status/940021008764846080?ref_src=twsrc%5Etfw"&gt;December 11, 2017&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async src="https://platform.twitter.com/widgets.js" charset="utf-8"&gt;&lt;/script&gt;
+
+
+---
+
+## Using RStudio Projects
+
+A project looks like this:
+
+&lt;img src="figures/project0.PNG" width="450px" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Using RStudio Projects
+
+The working directory of a project can look like this:
+
+&lt;img src="figures/project2.PNG" width="550px" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Using RStudio Projects
+#### Alternatives to `setwd()` and `rm(list = ls())`
+
+The recommended workflow goes something like this:
+
+*  ☝️ Launch RStudio from your R Project. This is a file ends with `.Rproj`.
+
+* ✌️ Open your script, make your edits, run your code.
+
+Want to run code from another script? Then:
+
+* 🤟 Restart R with `Ctrl + Shift + F10`
+
+* 🖖 Run your new script.
+
+**Pro-tip:** To run an entire script (a.k.a *source* a script), you can use `Ctrl + Shift + Enter`.
+
+
+---
+
+### What are paths?
+
+An __absolute path__ is the location of a directory relative to the root directory. Some examples of absolute paths:
+
+```r
+"O:/25 - Microeconomix/Contrats/ClientXYZ"
+"C:/Users/mcaldasrivera/Desktop/Formations R"
+```
+
+&lt;br&gt;
+
+A __relative path__ is the location of a directory relative to the working directory. They look like this:
+
+```r
+"data-raw"         # Sub-directory data-raw
+"../Administratif" # One up from working directory
+```
+
+---
+### Other resources
+
+These series of presentations are based on the [R for Data Science](http://r4ds.had.co.nz/index.html), by [Garrett Grolemund](https://twitter.com/statgarrett) and [Hadley Wickham](https://twitter.com/hadleywickham).
+
+&lt;img src="figures/cover-r4ds.png" width="30%" style="display: block; margin: auto;" /&gt;
+
+&lt;br&gt;
+
+--
+__You should read it.__
+
+---
+
+class: inverse, center, middle
+
+# Thank you!
+
+Questions?
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="https://platform.twitter.com/widgets.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "4:3"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
